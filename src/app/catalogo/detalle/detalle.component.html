@@ -1,0 +1,39 @@
+<div class="d-flex" id="wrapper">
+    <app-filtro></app-filtro>
+    <!-- Page Content -->
+    <div id="page-content-wrapper" class="w-100">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-3 text-center">
+                    <img src="http://localhost:8083/api/uploads/img/{{libro.isbn}}.jpg" alt="{{libro.titulo}}"
+                        height="300" width="200">
+                </div>
+                <div class="col-6">
+                    <h2>{{libro.titulo}}</h2>
+                    <p><b>Autor</b>: {{libro.autor.nombres}} {{libro.autor.apellidos}}</p>
+                    <p><b>Año de publicacion</b>: {{libro.publicacion | date: 'dd-MM-yyyy'}}</p>
+                    <p><b>Editorial</b>: {{libro.editorial.nombre}}</p>
+                    <p><b>Paginas</b>: {{libro.paginas}}</p>
+                    <p><b>Cantidad</b>: {{libro.cantidad}}</p>
+                    <p class="text-justify">{{libro.sinopsis}}</p>
+                </div>
+                <div class="col-3">
+                    <div class="text-center">
+                        <h3>Precio: S/. {{libro.precio}}</h3>
+                    </div>
+                    <p><b>Cantidad: </b><input type="number" [(ngModel)]="cantidad" min="1" max="20" step="1" /></p>
+                    <button type="button" class="btn btn-primary" (click)="agregarACarrito()">Agregar al carrito de
+                        compras</button>
+                </div>
+            </div>
+            <div class="row ">
+                    <div *ngFor="let tag of libro.tags">
+                        <span class="badge badge-primary ml-2">{{tag.nombre}}</span>
+                    </div>
+            </div>
+            <div class="row">
+                <app-calificacion class="w-100" *ngIf="libro" [libro]="libro"></app-calificacion>
+            </div>
+        </div>
+    </div>
+</div>

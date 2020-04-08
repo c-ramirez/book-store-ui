@@ -1,0 +1,141 @@
+<div class="d-flex justify-content-center">
+    <div class="card text-white bg-dark mb-3" style="width: 70%;">
+        <div class="card-body">
+            <h3 class="card-title">Formulario de registro</h3>
+            <form #f="ngForm" name="form" [matchValue]="['password', 'confirmPassword']">
+                <div class="form-group">
+                    <label>Nombres</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" #nombre="ngModel"
+                        [(ngModel)]="usuario.persona.nombres" placeholder="Ingrese sus nombres" required>
+                    <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="alert alert-danger">
+                        <div *ngIf="nombre.errors.required">
+                            El nombre es un campo obligatorio
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Apellido Paterno</label>
+                    <input type="text" class="form-control" id="apellidoPaterno" name="apellidoPaterno" required
+                        [(ngModel)]="usuario.persona.apellidoPaterno" placeholder="Ingrese su apellido paterno"
+                        #apellidoPaterno="ngModel">
+                    <div *ngIf="apellidoPaterno.invalid && (apellidoPaterno.dirty || apellidoPaterno.touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="apellidoPaterno.errors.required">
+                            El apellido paterno es un campo obligatorio
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Apellido Materno</label>
+                    <input type="text" class="form-control" id="apellidoMaterno" name="apellidoMaterno"
+                        #apellidoMaterno="ngModel" [(ngModel)]="usuario.persona.apellidoMaterno"
+                        placeholder="Ingrese su apellido materno" required>
+                    <div *ngIf="apellidoMaterno.invalid && (apellidoMaterno.dirty || apellidoMaterno.touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="apellidoMaterno.errors.required">
+                            El apellido materno es un campo obligatorio
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>DNI</label>
+                    <input class="form-control" id="dni" name="dni" #dni="ngModel" required
+                        [(ngModel)]="usuario.persona.documento" placeholder="Ingrese el número de su DNI"
+                        minlength="8" maxlength="8">
+                    <div *ngIf="dni.invalid && (dni.dirty || dni.touched)" class="alert alert-danger">
+                        <div *ngIf="dni.errors.required">
+                            El DNI es un campo obligatorio
+                        </div>
+                        <div *ngIf="dni.errors.minlength">
+                            El DNI debe tener 8 digitos
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Fecha de nacimiento</label>
+                    <div class="row">
+                        <input matInput [matDatepicker]="picker" class="form-control w-50 ml-3"
+                            #fechaNacimiento="ngModel" [(ngModel)]="usuario.persona.fechaNacimiento"
+                            name="fechaNacimiento" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </div>
+                    <div *ngIf="fechaNacimiento.invalid && (fechaNacimiento.dirty || fechaNacimiento.touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="fechaNacimiento.errors.required">
+                            La fecha de nacimiento es un campo obligatorio
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Genero</label>
+                    <mat-radio-group aria-label="Genero" class="ml-5" [(ngModel)]="usuario.persona.genero"
+                        name="genero">
+                        <mat-radio-button value="M">Masculino</mat-radio-button>
+                        <mat-radio-button value="F" class="ml-5">Femenino</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
+                        [(ngModel)]="usuario.persona.email" required email #email="ngModel" placeholder="example@site.com">
+                    <div *ngIf="email.invalid && (email.dirty || email.touched )" class="alert alert-danger">
+                        <div *ngIf="email.errors.required">
+                            El email es un campo obligatorio
+                        </div>
+                        <div *ngIf="email.errors.email">
+                            El email debe tener el formato correcto
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp"
+                        placeholder="Ingrese su username" [(ngModel)]="usuario.username" required minlength="4"
+                        #username="ngModel">
+                    <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
+                        <div *ngIf="username.errors.required">
+                            El username es obligatorio
+                        </div>
+                        <div *ngIf="username.errors.minlength">
+                            Nombre debe tener al menos 4 caracteres
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password" required
+                        #password="ngModel" placeholder="Ingrese su contraseña" [(ngModel)]="usuario.password" minlength="6">
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+                        <div *ngIf="password.errors.required">
+                            El password es obligatorio
+                        </div>
+                        <div *ngIf="password.errors.minlength">
+                            El password debe ser minimo de 6 caracteres
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Repita la contraseña</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required [(ngModel)]="usuario.confirmPassword"
+                        placeholder="Ingrese su contraseña" #confirmPassword="ngModel" minlength="6">
+                        <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)" class="alert alert-danger">
+                            <div *ngIf="confirmPassword.errors.required">
+                                Debe ingresar la confirmacion la contraseña
+                            </div>
+                            <div *ngIf="confirmPassword.errors.matchValueError">
+                                Las contraseñas deben coincidir
+                            </div>
+                            <div *ngIf="confirmPassword.errors.minlength">
+                                El password debe ser minimo de 6 caracteres
+                            </div>
+                        </div>
+                </div>
+
+                <div class="w-100 text-center mt-5">
+                    <input type="submit" class="btn btn-primary" value="Registrate" (click)="registrarUsuario(f)">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

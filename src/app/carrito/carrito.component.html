@@ -1,0 +1,47 @@
+<div class="d-flex" id="wrapper">
+  <div id="page-content-wrapper" class="w-100">
+    <div class="container-fluid">
+      <div class="row">
+        <h2>CARRITO DE COMPRAS</h2>
+      </div>
+      <div class="row">
+        <div class="col-9">
+          <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Libro</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio Unidad</th>
+                <th scope="col">SubTotal</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detalle of compra.detalles">
+                <th scope="row">{{compra.detalles.indexOf(detalle)+1}}</th>
+                <td><a [routerLink]="['/detalle',detalle.libroIsbn]"
+                    routerLinkActive="router-link-active">{{detalle.libroTitulo}}</a></td>
+                <td>{{detalle.cantidad}}</td>
+                <td>S/. {{detalle.precioUnidad}}</td>
+                <td>S/. {{detalle.subtotal | number:'1.2-2'}}</td>
+                <td><button type="button" class="btn btn-danger" name="eliminar"
+                    (click)="eliminarDetalleCarrito(detalle)">X</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-3">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Total</h5>
+              <p class="card-text">S/. {{compra.total| number:'1.2-2'}}</p>
+              <button type="button" class="btn btn-primary" name="comprar">Comprar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

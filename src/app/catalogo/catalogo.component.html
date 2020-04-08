@@ -1,0 +1,32 @@
+<div class="d-flex" id="wrapper">
+    <app-filtro></app-filtro>
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row row-cols-md-3">
+                <div *ngFor="let libro of libros">
+                    <div class="col mb-4">
+                        <div class="card h-100">
+                            <div class="text-center">
+                                <a tabindex="0" id="book-img" href="/detalle/{{libro.isbn}}">
+                                    <img src="http://localhost:8083/api/uploads/img/{{libro.isbn}}.jpg"
+                                        alt="{{libro.titulo}}" 
+                                        height="200" width="128">
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{libro.titulo}}</h5>
+                                <p class="card-text">Autor: {{libro.autor.nombres}} {{libro.autor.apellidos}}</p>
+                                <p class="card-text">Editorial: {{libro.editorial.nombre}}</p>
+                                <p class="card-text">Precio: S/. {{libro.precio}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- /#page-content-wrapper -->
+        <div class="text-center">
+            <app-paginador *ngIf="paginador" [paginador]="paginador"></app-paginador>
+        </div>
+
+    </div>
