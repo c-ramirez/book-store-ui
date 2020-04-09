@@ -1,4 +1,4 @@
-<div class="card mt-5 ">
+<div class="card mt-5 border-primary">
     <div class="card-header">
         <p>Opiniones</p>
     </div>
@@ -6,25 +6,63 @@
         <div class="container-fluid w-100">
             <div class="row">
                 <div class="col-11">
-                    <textarea placeholder="Escribe tu comentario" rows="3" style="width:100%" [(ngModel)]="comentario.comentario" 
-                    name="comentario" ></textarea>
+                    <textarea placeholder="Escribe tu comentario" rows="3" style="width:100%"
+                        [(ngModel)]="comentario.comentario" name="comentario"></textarea>
                 </div>
                 <div class="col-1">
                     <button type="button" class="btn btn-primary" (click)="guardarComentario()">Publicar</button>
                 </div>
-                <div class="card w-100 mt-3" *ngFor="let comentario of comentarios">
-                    <div class="card-header">
-                        <div class="row">
-                        <div class="col-9"><p>{{comentario.usuarioNombre}} dijo: </p></div>
-                        <div class="col-3 font-italic" style="font-size:small">Publicado en {{comentario.publicacion | date : 'dd/MM/yyyy hh:mm a'}}</div>
+            </div>
+            <div class="row w-100" *ngFor="let comentario of comentarios">
+                <div class="col-11">
+                    <div class="card w-100 mt-3 ">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-8">
+                                    <p>{{comentario.usuarioNombre}} dijo: </p>
+                                </div>
+                                <div class="col-4 font-italic" style="font-size:small">Publicado en
+                                    {{comentario.publicacion | date : 'dd/MM/yyyy hh:mm a'}}</div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div *ngIf="!comentario.editar">
+                                <div class="container-fluid w-100">
+                                    {{comentario.comentario}}
+                                </div>                               
+                            </div>
+                            <div *ngIf="comentario.editar">
+                                <textarea rows="3" style="width:100%" [(ngModel)]="editComentario.comentario"
+                                    name="editComentario"></textarea>
+                            </div>
+                        </div>
+
                     </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="container-fluid w-100">
-                            {{comentario.comentario}}
+                </div>
+                <div class="col-1">
+                    <div *ngIf="!comentario.editar">
+                        <div class="container-fluid  mt-3" *ngIf="comentario.usuarioId === authService.usuario.id">
+                            <button class="btn btn btn-info" (click)="habilitarEdicion(comentario)"><span
+                                    class="material-icons">edit
+                                </span></button>
+                            <button class="btn btn btn-danger mt-1" (click)="eliminarComentario(comentario.id)"><span
+                                    class="material-icons">delete
+                                </span></button>
+
                         </div>
                     </div>
-
+                    <div *ngIf="comentario.editar">
+                        <div class="container-fluid  mt-3" *ngIf="comentario.usuarioId === authService.usuario.id">
+                            <button class="btn btn btn-info" (click)="editarComentario(comentario)"><span
+                                    class="material-icons">
+                                    done
+                                </span></button>
+                            <button class="btn btn btn-danger mt-1" (click)="cancelarEdicion(comentario)"><span
+                                    class="material-icons">
+                                    close
+                                </span></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

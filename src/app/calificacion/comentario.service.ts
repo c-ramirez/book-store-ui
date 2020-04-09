@@ -18,4 +18,13 @@ export class ComentarioService {
   public guardarComentario(comentario: Comentario): Observable<Comentario> {
     return this.http.post<Comentario>(this.urlEndpoint + '/comentario', comentario);
   }
+
+  public eliminarComentario(id: number): Observable<any> {
+    return this.http.delete(this.urlEndpoint + '/comentario/' + id);
+  }
+
+  public editarComentario(comentario: Comentario): Observable<Comentario> {
+    return this.http.put<Comentario>(this.urlEndpoint + '/comentario', comentario);
+  }
+
 }

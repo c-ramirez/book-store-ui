@@ -15,9 +15,11 @@ export class CalificacionComponent implements OnInit, OnChanges {
   libro: Libro;
   comentarios: Array<Comentario> = [];
   comentario: Comentario;
+  editComentario: Comentario;
   constructor(private comentarioService: ComentarioService,
     private authService: AuthService) {
     this.comentario = new Comentario();
+    this.editComentario = new Comentario();
   }
 
   ngOnInit() {
@@ -54,6 +56,41 @@ export class CalificacionComponent implements OnInit, OnChanges {
     } else {
       Swal.fire('Error', 'El comentario no puede estar vacio', 'error');
     }
+
+  }
+  public habilitarEdicion(comentario: Comentario) {
+    this.editComentario.comentario = comentario.comentario;
+    this.editComentario.id = comentario.id;
+    comentario.editar = true;
+  }
+  public editarComentario(comentario: Comentario) {
+    this.comentarioService.editarComentario(this.editComentario).subscribe(result => {
+      comentario.comentario = this.editComentario.comentario;
+      comentario.editar = false;
+    });
+  }
+  public cancelarEdicion(comentario: Comentario) {
+    comentario.editar = false;
+  }
+  public eliminarComentario(id: number) {
+    Swal.fire({
+      text: '¿Deseas eliminar el comentario?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.value) {
+        this.comentarioService.eliminarComentario(id).subscribe(result => {
+          this.comentarios = this.comentarios.filter(c => id !== c.id);
+          Swal.fire('Guardado', 'El comentario fue borrado', 'success');
+        }, err => {
+          Swal.fire('Error', 'Ocurrio un error al eliminar el comentario', 'error');
+        });
+      }
+    });
 
   }
 

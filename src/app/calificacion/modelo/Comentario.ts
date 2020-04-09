@@ -7,4 +7,5 @@ export class Comentario {
     usuarioNombre: string;
     comentario: string;
     publicacion: Date;
+    editar = false;
 }
