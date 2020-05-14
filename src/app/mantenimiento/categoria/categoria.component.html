@@ -1,0 +1,23 @@
+<div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <app-opciones></app-opciones>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper" class="w-100">
+        <div class="list-group ">
+            <a href="#" class="list-group-item list-group-item-action" *ngFor="let categoria of categorias">
+                <div class="row">
+                    <div class="col-12">
+                        <h6>{{categoria.nombre}}</h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="text-center mt-5">
+            <app-paginador *ngIf="paginador" [paginador]="paginador" [url]="url"></app-paginador>
+        </div>
+    </div>
+</div>
+<!-- /#page-content-wrapper -->

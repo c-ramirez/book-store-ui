@@ -9,6 +9,8 @@ export class PaginadorComponent implements OnInit, OnChanges {
 
   @Input() paginador: any;
 
+  @Input() url: string;
+
   paginas: number[];
 
   desde: number;

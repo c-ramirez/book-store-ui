@@ -1,0 +1,30 @@
+<div class="d-flex w-100" id="wrapper">
+
+  <!-- Sidebar -->
+  <app-opciones></app-opciones>
+  <!-- /#sidebar-wrapper -->
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper" class="w-100">
+    <div class="list-group">
+      <a href="/mantenimiento/libro/detalle/{{libro.isbn}}" class="list-group-item list-group-item-action" *ngFor="let libro of libros">
+        <div class="row">
+          <div class="col-2">
+            <img src="http://localhost:8083/api/uploads/img/{{libro.isbn}}.jpg" alt="{{libro.titulo}}" height="150"
+              width="100">
+          </div>
+          <div class="col-10">
+            <h3>{{libro.titulo}}</h3>
+            <h6>{{libro.publicacion | date: 'dd/MM/yyyy'}}</h6>
+            <h6>Disponible {{libro.cantidad}}</h6>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="text-center">
+      <app-paginador *ngIf="paginador" [paginador]="paginador" [url]="url"></app-paginador>
+    </div>
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>

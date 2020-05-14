@@ -1,3 +1,5 @@
+import { RoleGuard } from './login/guards/role.guard';
+import { MantenimientoComponent } from './mantenimiento/mantenimiento.component';
 import { MatchValueDirective } from './directivas/MatchValueDirective.directive';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { TokenInterceptor } from './login/interceptors/token.interceptor';
@@ -22,15 +24,37 @@ import { RegistroComponent } from './registro/registro.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material';
+import { OpcionesComponent } from './mantenimiento/opciones/opciones.component';
+import { LibroComponent } from './mantenimiento/libro/libro.component';
+import { DetalleLibroComponent } from './mantenimiento/libro/detalle-libro/detalle-libro.component';
+import { AutorComponent } from './mantenimiento/autor/autor.component';
+import { CategoriaComponent } from './mantenimiento/categoria/categoria.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/catalogo', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'catalogo', component: CatalogoComponent },
-  { path: 'catalogo/page/:page', component: CatalogoComponent },
-  { path: 'detalle/:id', component: DetalleComponent },
-  { path: 'carrito', component: CarritoComponent , canActivate: [AuthGuard]},
-  { path: 'registro',  component: RegistroComponent}
+   { path: '', redirectTo: '/catalogo', pathMatch: 'full' },
+   { path: 'login', component: LoginComponent },
+   { path: 'catalogo', component: CatalogoComponent },
+   { path: 'catalogo/page/:page', component: CatalogoComponent },
+   { path: 'detalle/:id', component: DetalleComponent },
+   { path: 'carrito', component: CarritoComponent, canActivate: [AuthGuard] },
+   { path: 'registro', component: RegistroComponent },
+   { path: 'mantenimiento', children: [
+         { path: '', component: MantenimientoComponent },
+         { path: 'libro', children: [
+            { path: '', component: LibroComponent },
+            { path: 'detalle/:isbn', component: DetalleLibroComponent},
+            { path: 'page/:page', component: LibroComponent}
+         ]},
+         { path: 'autor', children: [
+            { path: '', component: AutorComponent},
+            { path: 'page/:page', component: AutorComponent}
+         ]},
+         { path: 'categoria', children: [
+            { path: '', component: CategoriaComponent},
+            { path: 'page/:page', component: CategoriaComponent}
+         ]}
+      ], canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' }
+   }
 ];
 @NgModule({
    declarations: [
@@ -45,7 +69,13 @@ const routes: Routes = [
       PaginadorComponent,
       CalificacionComponent,
       RegistroComponent,
-      MatchValueDirective
+      MatchValueDirective,
+      MantenimientoComponent,
+      OpcionesComponent,
+      LibroComponent,
+      DetalleLibroComponent,
+      AutorComponent,
+      CategoriaComponent
    ],
    imports: [
       BrowserModule,

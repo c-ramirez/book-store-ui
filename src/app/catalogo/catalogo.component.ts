@@ -11,9 +11,10 @@ import { withLatestFrom } from 'rxjs/operators';
   styleUrls: ['./catalogo.component.css']
 })
 export class CatalogoComponent implements OnInit {
-  constructor(private catalogoService: CatalogoService,private activatedRoute: ActivatedRoute) { }
+  constructor(private catalogoService: CatalogoService, private activatedRoute: ActivatedRoute) { }
   libros: Libro[];
   paginador: any;
+  url = '/catalogo/';
   ngOnInit() {
     this.activatedRoute.url.pipe(
       withLatestFrom(this.activatedRoute.paramMap, this.activatedRoute.queryParamMap)
@@ -29,19 +30,19 @@ export class CatalogoComponent implements OnInit {
         });
     });
 
-   /* this.activatedRoute.paramMap.subscribe(params => {
-      let page: number = +params.get('page');
-
-      if (!page) {
-        page = 0;
-      }
-
-      this.catalogoService.listarLibros(page)
-        .pipe().subscribe(response => {
-          this.libros = response.content as Libro[];
-          this.paginador = response;
-        });
-    });*/
+    /* this.activatedRoute.paramMap.subscribe(params => {
+       let page: number = +params.get('page');
+ 
+       if (!page) {
+         page = 0;
+       }
+ 
+       this.catalogoService.listarLibros(page)
+         .pipe().subscribe(response => {
+           this.libros = response.content as Libro[];
+           this.paginador = response;
+         });
+     });*/
   }
 
 }

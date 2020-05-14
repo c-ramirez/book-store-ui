@@ -1,0 +1,109 @@
+<div class="d-flex w-100 mb-5" id="wrapper">
+
+    <!-- Sidebar -->
+    <app-opciones></app-opciones>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper" class="w-100">
+        <!-- Button trigger modal -->
+
+
+        <div class="row" *ngIf="libro">
+            <div class="col-3">
+                <img src="http://localhost:8083/api/uploads/img/{{libro.isbn}}.jpg" alt="{{libro.titulo}}" height="300"
+                    width="200">
+            </div>
+            <div class="col-8" *ngIf="!edicion">
+                <h2>{{libro.titulo}}</h2>
+                <p><b>Autor</b>: {{libro.autor.nombres}} {{libro.autor.apellidos}}</p>
+                <p><b>Año de publicacion</b>: {{libro.publicacion | date: 'dd-MM-yyyy'}}</p>
+                <p><b>Editorial</b>: {{libro.editorial.nombre}}</p>
+                <p><b>Paginas</b>: {{libro.paginas}}</p>
+                <p><b>Cantidad</b>: {{libro.cantidad}}</p>
+                <p><b>Agregado</b>: {{libro.fechaAgregado | date: 'dd/MM/yyyy hh:mm'}}</p>
+                <b>Sinopsis</b>
+                <p class="text-justify">{{libro.sinopsis}}</p>
+                <b>Categorias</b>
+                <div class="row">
+                    <span class="badge badge-primary ml-3" *ngFor="let tag of libro.tags">{{tag.nombre}}</span>
+                </div>
+            </div>
+            <div class="col-8" *ngIf="edicion">
+                <form id="formLibro">
+                    <div class="form-group">
+                        <b>Titulo</b>
+                        <input type="text" [(ngModel)]="libro.titulo" name="titulo" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <p><b>Autor</b> <select class="custom-select" [(ngModel)]="libro.autor.id" name="autor"
+                                id="autor">
+                                <option *ngFor="let autor of autores" [(ngValue)]='autor.id'>{{autor.nombres}}
+                                    {{autor.apellidos}}</option>
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <p><b>Año de publicación</b></p>
+                        <div class="row"><input matInput [matDatepicker]="picker" class="form-control w-50 ml-3"
+                                [value]="publicacionForm.value" #publicacion="ngModel" [(ngModel)]="libro.publicacion"
+                                name="publicacion" required>
+                            <mat-datepicker-toggle matSuffix [for]="picker" style="color: black;">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </div>
+                    </div>
+                    <p><b>Editorial</b>: {{libro.editorial.nombre}}</p>
+                    <div class="form-group">
+                        <p><b>Paginas</b> <input type="number" class="form-control" name="paginas"
+                                [(ngModel)]="libro.paginas" required></p>
+                    </div>
+                    <div class="form-group">
+                        <p><b>Cantidad</b> <input type="number" class="form-control" name="cantidad"
+                                [(ngModel)]="libro.cantidad" required></p>
+                    </div>
+                    <div class="form-group">
+                        <p><b>Sinopsis</b> <textarea name="sinopsis" id="sinopsis" class="form-control" rows="5"
+                                [(ngModel)]="libro.sinopsis" required></textarea></p>
+                    </div>
+                    <p><b>Agregado</b>: {{libro.fechaAgregado | date: 'dd/MM/yyyy hh:mm'}}</p>
+                    <p><b>Categorias</b> <button class="btn btn-info btn-sm ml-3" data-toggle="modal"
+                            data-target="#exampleModal">Editar</button></p>
+                    <div class="row">
+                        <span class="badge badge-primary ml-3" *ngFor="let tag of libro.tags">{{tag.nombre}}</span>
+                    </div>
+                </form>
+            </div>
+            <div class="col-1" *ngIf="!edicion">
+                <button class="btn btn btn-info" (click)="habilitarEdicion()"><span class="material-icons">edit
+                    </span></button>
+            </div>
+            <div class="col-1" *ngIf="edicion">
+                <button class="btn btn btn-info" (click)="guardarCambios()"><span class="material-icons">save
+                    </span></button>
+                <button class="btn btn btn-danger mt-3" (click)="cancelarEdicion()"><span class="material-icons">cancel
+                    </span></button>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Categorias</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

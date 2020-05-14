@@ -15,5 +15,5 @@ export class Libro {
     autor: Autor;
     editorial: Editorial;
     tags: Array<Tag>;
-
+    fechaAgregado: Date;
 }
