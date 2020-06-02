@@ -45,7 +45,7 @@
                     <div class="form-group">
                         <p><b>Año de publicación</b></p>
                         <div class="row"><input matInput [matDatepicker]="picker" class="form-control w-50 ml-3"
-                                [value]="publicacionForm.value" #publicacion="ngModel" [(ngModel)]="libro.publicacion"
+                                [formControl]="publicacionForm" [(ngModel)]="libro.publicacion"
                                 name="publicacion" required>
                             <mat-datepicker-toggle matSuffix [for]="picker" style="color: black;">
                             </mat-datepicker-toggle>
@@ -96,7 +96,12 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        ...
+                        <mat-selection-list #cat style="background-color: gray;" [(ngModel)]="libro.tags">
+                            <mat-list-option *ngFor="let categoria of categorias" [value]="categoria"
+                                [selected]="categoria.selected">
+                                {{categoria.nombre}}
+                            </mat-list-option>
+                        </mat-selection-list>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

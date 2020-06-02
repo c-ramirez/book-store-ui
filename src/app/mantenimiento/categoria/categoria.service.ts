@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CategoriaService {
-  private urlEndpoint = 'http://localhost:8083/api/mant/categoria';
+  private urlEndpoint = 'http://localhost:8083/api/categoria';
   constructor(private http: HttpClient, private router: Router) { }
   obtenerPaginaCategorias(pagina: number): Observable<any> {
     return this.http.get(this.urlEndpoint + '/page/' + pagina);

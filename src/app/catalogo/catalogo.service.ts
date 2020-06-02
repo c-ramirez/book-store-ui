@@ -11,7 +11,7 @@ import { map, tap } from 'rxjs/operators';
 export class CatalogoService {
   private urlEndpoint = 'http://localhost:8083/api/libro';
   private urlDetalle = 'http://localhost:8083/api/libro/';
-  private urlTag = 'http://localhost:8083/api/tag';
+  private urlTag = 'http://localhost:8083/api/categoria';
   constructor(private http: HttpClient, private router: Router) { }
 
   listarLibros(page: number, tag: string): Observable<any> {

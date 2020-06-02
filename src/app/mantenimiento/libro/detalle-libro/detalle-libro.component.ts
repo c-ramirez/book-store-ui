@@ -1,3 +1,4 @@
+import { tap } from 'rxjs/operators';
 import { CategoriaService } from './../../categoria/categoria.service';
 import { Tag } from './../../../catalogo/modelo/Tag';
 import { AutorService } from './../../autor/autor.service';
@@ -8,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Autor } from 'src/app/catalogo/modelo/Autor';
 import Swal from 'sweetalert2';
+import { MatListModule } from '@angular/material/list';
 import * as _ from 'lodash';
 @Component({
   selector: 'app-detalle-libro',
@@ -20,7 +22,7 @@ export class DetalleLibroComponent implements OnInit {
   private edicion = false;
   publicacionForm: FormControl;
   private autores: Array<Autor>;
-  private categorias: Array<Tag>;
+  categorias: Array<Tag>;
   constructor(private libroService: LibroService,
     private autorService: AutorService,
     private activatedRoute: ActivatedRoute,
@@ -32,6 +34,7 @@ export class DetalleLibroComponent implements OnInit {
     });
     this.categoriaService.obtenerCategorias().subscribe(result => {
       this.categorias = result;
+      this.categorias.forEach(tag => tag.selected = false);
     });
     this.activatedRoute.paramMap.subscribe(params => {
       const isbn = params.get('isbn');
@@ -42,10 +45,18 @@ export class DetalleLibroComponent implements OnInit {
             this.libro = response;
             this.publicacionForm = new FormControl(this.libro.publicacion);
             this.tempLibro = _.cloneDeep(this.libro);
+            for (let cat of this.categorias) {
+              for (let tag of this.libro.tags) {
+                if (cat.nombre === tag.nombre) {
+                  cat.selected = true;
+                }
+              }
+            }
           }
         );
       }
     });
+
   }
   habilitarEdicion() {
     this.tempLibro = _.cloneDeep(this.libro);
